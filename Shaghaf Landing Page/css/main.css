@@ -1,0 +1,596 @@
+/* ////////////////////////////////   Fonts   //////////////////////////////// */
+
+/* Defines the 'SansOneBold' font to use it throughout the website.
+    There is multiple font formats (.woff2, .woff, .ttf) to ensure the font works in different browsers. */
+@font-face {
+    font-family: 'SansOneBold'; /* Name of the custom font */
+    src:
+        url('./assets/fonts/arbfonts-ffshamelfamily-sansonebold-webfont.woff2') format('woff2'), /* Modern browsers */
+        url('./assets/fonts/arbfonts-ffshamelfamily-sansonebold-webfont.woff') format('woff'), /* Slightly older browsers */
+        url('./assets/fonts/ArbFONTS-FFShamelFamily-SansOneBold.ttf') format('truetype'); /* Older browsers */
+    font-weight: normal; /* Specifies that this font is used for normal (non-bold) weight */
+    font-style: normal;  /* Specifies that this font is used for normal (non-italic) text */
+}
+
+/* Defines another font 'SansOneBook', used for regular text (book font).
+    Like the previous one, it includes multiple formats for compatibility. */
+@font-face {
+    font-family: 'SansOneBook'; /* Name of the custom font */
+    src:
+        url('./assets/fonts/arbfonts-ffshamelfamily-sansonebook-webfont.woff2') format('woff2'),
+        url('./assets/fonts/arbfonts-ffshamelfamily-sansonebook-webfont.woff') format('woff'),
+        url('./assets/fonts/ArbFONTS-FFShamelFamily-SansOneBook.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ################################   Fonts End   ################################ */
+
+/* ////////////////////////////////   Variables   //////////////////////////////// */
+
+/* CSS variables, used to store values like colors and shadows, making them reusable throughout the code.
+    Instead of writing the color codes everywhere, define them once and reuse them. */
+:root {
+    --c-dark: #212529; /* Dark color, mostly used for text or backgrounds */
+    --c-light: #ffffff; /* Light color (white), used for backgrounds or text */
+    --c-brand: rgb(0, 150, 163); /* Main brand color (a shade of teal) */
+    --c-brand-light: #6970dd; /* Lighter shade of the brand color, used for hover effects */
+    --c-paragraph: rgb(17, 0, 0); /* Color for paragraphs (almost black) */
+    --box-shadow: 0px 15px 25px rgba(0,0,0,0.08); /* A shadow effect applied to elements for depth */
+    --transition: all 0.5s ease; /* A smooth transition for hover effects and animations */
+}
+
+/* ################################   Variables End   ################################ */
+
+/* ////////////////////////////////   RTL Styles   //////////////////////////////// */
+
+/* These styles apply when the page is in Right-to-Left (RTL) mode, typically for Arabic or other RTL languages. */
+body.rtl {
+    direction: rtl; /* Changes the text direction to right-to-left */
+    text-align: right; /* Aligns text to the right */
+}
+
+/* Additional adjustments for elements like the navbar and cards in RTL mode. */
+body.rtl .navbar, body.rtl .header__lang_box, body.rtl .card-body {
+    direction: rtl; /* Ensures these elements also respect the RTL direction */
+}
+
+/* ################################   RTL Styles End   ################################ */
+
+/* ////////////////////////////////   General Adjustments   //////////////////////////////// */
+
+/* Removes the default margin and padding from the entire page to prevent unwanted spacing. */
+html, body {
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    margin: 0;
+    padding: 0;
+}
+
+/* Defines the font family, line spacing, and text color for the entire body of the page */
+body {
+    font-family: var(--font-base); /* Uses the base font defined earlier (likely SansOneBook) */
+    line-height: 1.7; /* Sets the space between lines for better readability */
+    color: var(--c-body); /* Uses the default body text color */
+}
+
+/* For headings (h1-h6), bold text with a specific color and font family is applied */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: 600; /* Bold font weight */
+    color: var(--c-brand); /* Uses the brand color */
+    font-family: 'SansOneBold', sans-serif; /* Applies the 'SansOneBold' font */
+}
+
+/* Paragraph styling */
+p {
+    font-family: 'SansOneBook', sans-serif; /* Applies the 'SansOneBook' font for regular text */
+}
+
+/* Link styles */
+a {
+    text-decoration: none; /* Removes underlining from links */
+    color: var(--c-brand); /* Sets the link color to the brand color */
+    transition: var(--transition); /* Adds a smooth transition for hover effects */
+}
+
+a:hover {
+    color: var(--c-brand-light); /* Changes the link color on hover */
+}
+
+/* Ensures images never exceed their container's width and scale accordingly */
+img {
+    max-width: 100%; /* Sets the image width to 100% of its container */
+    height: auto; /* Adjusts the height automatically based on the width */
+}
+
+/* ################################   General Adjustments End   ################################ */
+
+/* ////////////////////////////////   Loading Screen   //////////////////////////////// */
+
+/* The loading screen is a full-page overlay that appears while the content is loading */
+#loading-screen {
+    position: fixed; /* Sticks the loading screen to the viewport */
+    width: 100%; /* Covers the full width of the screen */
+    height: 100%; /* Covers the full height of the screen */
+    top: 0; /* Position it at the top */
+    left: 0; /* Position it at the left edge */
+    background-color: var(--c-light); /* White background */
+    display: flex; /* Flexbox to center the content inside */
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    z-index: 1000; /* High z-index to ensure it stays on top of all other content */
+}
+
+/* Container for the centered logo with spinning dots */
+.logo-container {
+    position: relative; /* Positions the logo relative to the surrounding elements */
+    width: 120px; /* Width of the logo container */
+    height: 120px; /* Height of the logo container */
+}
+
+/* The actual logo image inside the container */
+.logo-container img {
+    position: absolute; /* Allows precise positioning inside the container */
+    top: 50%; /* Vertically centers the logo */
+    left: 50%; /* Horizontally centers the logo */
+    transform: translate(-50%, -50%); /* Fine-tunes centering by adjusting its position */
+    border-radius: 50%; /* Makes the logo round */
+    width: 100px; /* Sets the logo's width */
+    height: 100px; /* Sets the logo's height */
+    animation: blink 2s linear infinite; /* Makes the logo blink (fade in and out) continuously */
+}
+
+/* Container for the spinning dots surrounding the logo */
+.spinning-dots {
+    position: absolute; /* Centers the dots around the logo */
+    top: 50%; /* Centers vertically */
+    left: 50%; /* Centers horizontally */
+    width: 120px; /* Same width as the logo container */
+    height: 120px; /* Same height as the logo container */
+    transform: translate(-50%, -50%); /* Ensures it's perfectly centered */
+}
+
+/* Styles for each dot around the logo */
+.spinning-dots div {
+    position: absolute; /* Allows precise positioning of each dot */
+    width: 10px; /* Width of the dots */
+    height: 10px; /* Height of the dots */
+    background-color: #3498db; /* Sets the dot color (blue) */
+    border-radius: 50%; /* Makes the dots round */
+}
+
+/* Positioning each dot around the circle */
+.dot1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
+.dot2 { top: 14.64%; left: 85.36%; transform: translate(-50%, -50%); }
+.dot3 { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+.dot4 { top: 85.36%; left: 85.36%; transform: translate(-50%, -50%); }
+.dot5 { top: 100%; left: 50%; transform: translate(-50%, -50%); }
+.dot6 { top: 85.36%; left: 14.64%; transform: translate(-50%, -50%); }
+.dot7 { top: 50%; left: 0; transform: translate(-50%, -50%); }
+.dot8 { top: 14.64%; left: 14.64%; transform: translate(-50%, -50%); }
+
+/* Animation to spin the dots around the logo */
+.spinning-dots {
+    animation: spin 2s linear infinite; /* Rotates the dots in a circle forever */
+}
+
+/* Defines the spin animation */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); } /* Starts at 0 degrees */
+    100% { transform: translate(-50%, -50%) rotate(360deg); } /* Ends at 360 degrees (one full rotation) */
+}
+
+/* Blink animation for the logo */
+@keyframes blink {
+    0%, 100% { opacity: 1; } /* Fully visible at the start and end */
+    50% { opacity: 0; } /* Invisible at the halfway point */
+}
+
+/* ################################   Loading Screen End   ################################ */
+
+/* ////////////////////////////////   Navbar   //////////////////////////////// */
+
+/* Basic styles for the navigation bar */
+.navbar {
+    transition: all 0.9s ease-in-out; /* Smooth transition for any changes */
+    box-shadow: var(--box-shadow); /* Adds shadow to the navbar */
+    background-color: var(--c-brand); /* Sets the navbar background color to the brand color */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transitions for both movement and shadow */
+    position: fixed; /* Fixes the navbar at the top of the screen */
+    width: 100%; /* Full width */
+    top: 0; /* Sticks it to the top */
+    z-index: 1000; /* High z-index to ensure it's above the content */
+}
+
+/* Container inside the navbar for layout */
+.navbar .container {
+    display: flex; /* Uses flexbox to align elements */
+    justify-content: space-between; /* Distributes space between elements */
+}
+
+/* Style for the brand/logo inside the navbar */
+.navbar .navbar-brand {
+    flex: 0 0 auto; /* Prevents the brand/logo from shrinking */
+
+}
+
+/* Brand logo styling */
+.navbar-brand {
+    background-color: var(--c-light); /* White background for the logo */
+    border-radius: 48%; /* Slightly rounded corners */
+    margin-left: 30px; /* Adds some spacing to the left of the logo */
+    margin-right: 50px; /* Adds some spacing to the right of the logo */
+}
+
+/* Sets a maximum height for the logo image */
+.navbar-brand img {
+    max-height: 50px;
+}
+
+/* Additional logo styling */
+.navbar-logo {
+    margin-right: 0;
+    border-radius: 50%; /* Fully round */
+    background-color: var(--c-light);
+    height: 330px;
+    width: 80px;
+}
+
+/* Styling for the navigation links */
+.navbar-nav .nav-link {
+    font-weight: 500; /* Slightly bold text */
+    color: var(--c-dark); /* Dark color for links */
+}
+
+/* Space between each navbar item */
+.nav-item {
+    padding: 0;
+    margin:0;
+    font-size: larger;
+}
+
+/* Hides the border around the navbar toggle button (for mobile view) */
+.navbar-toggler {
+    border: none;
+}
+
+/* Navbar style when the user scrolls down */
+.navbar.scrolled {
+    background-color: rgba(0, 150, 163, 0.9); /* Semi-transparent background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    padding: 5px 0; /* Reduces padding on scroll */
+}
+
+/* Media query for larger screens */
+@media (min-width: 1201px) {
+    .header {
+        padding: 20px 0;
+    }
+}
+
+/* Media query for small screens */
+@media (max-width: 991px) {
+        /* Hover effect for dropdown list items */
+    .header__lang_box :hover {
+        background-color: #0056b3; /* Changes the background to dark blue when hovered */
+        color: var(--c-dark); /* Keeps the text color black */
+    }
+}
+
+/* ################################   Navbar End   ################################ */
+
+/* ////////////////////////////////   Language Dropdown Menu   //////////////////////////////// */
+
+.header__lang {
+    margin-top: 2px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    margin-bottom: 0;
+    width: 6%;
+}
+
+.header__lang span{
+    font-weight: bolder;
+
+}
+
+/* The container for the language dropdown menu */
+.header__lang_box {
+    width: 80px; /* Sets the width of the language dropdown */
+    padding: 0;
+    margin: 0;
+
+}
+
+/* Dropdown list items styling */
+.header__lang_box li {
+    padding: 0px 40px; /* Adds extra padding inside the list item */
+    display: flex; /* Flexbox layout for alignment of the items */
+    align-items: left; /* Aligns items to the left */
+    height: 30px; /* Height of the dropdown item */
+    width: 100px; /* Width of the dropdown item */
+    color: var(--c-dark); /* Sets text color to black */
+}
+
+/* Hover effect for dropdown list items */
+.header__lang_box :hover {
+    background-color: #0056b3; /* Changes the background to dark blue when hovered */
+    color: var(--c-dark); /* Keeps the text color black */
+}
+
+/* Styles for anchor tags inside dropdown list items */
+.header__lang_box li a {
+    text-decoration: none; /* Removes underline from the links */
+    width: 80px; /* Sets a fixed width for the link */
+}
+
+/* Styling for flag images in the language dropdown */
+.header__lang_box li img {
+    margin-right: 10px; /* Adds space between the flag and the text */
+    height: 40px; /* Height of the flag image */
+    width: 100px; /* Width of the flag image */
+
+}
+
+/* Custom styles for the dropdown toggle button (language selector) */
+.header__lang a {
+    text-decoration: none; /* Removes underline from the text */
+    color: var(--c-dark); /* Sets the text color to black */
+    padding: 0.375rem 1rem; /* Adds padding around the button */
+    border-radius: 0.25rem; /* Gives the button rounded corners */
+    display: flex; /* Uses flexbox for alignment */
+    align-items: center; /* Vertically centers the content */
+    width: 280px; /* Sets a fixed width for the language toggle button */
+}
+
+/* Dropdown menu styling (hidden by default) */
+.dropdown-menu {
+    display: none;
+    transition: max-height 0.3s ease-out; /* Smooth transition for showing/hiding */
+    max-height: 0; /* Collapsed height */
+    overflow: hidden; /* Hides overflow */
+}
+/* When the dropdown is shown */
+.dropdown-menu.show {
+    display: block;
+    max-height: 500px; /* Expands height */
+}
+/* Style for individual dropdown items */
+.dropdown-menu .dropdown-item {
+    color: var(--c-light); /* White text color to ensure visibility against the orange background */
+}
+
+/* Adjust flag size in the language dropdown */
+.flag-img {
+    width: 20px; /* Sets the width of the flag image */
+    margin-right: 5px; /* Adds a small space between the flag and text */
+}
+
+/* ################################   Language Dropdown Menu End   ################################ */
+
+/* ////////////////////////////////   Sections   //////////////////////////////// */
+
+/* About section styling */
+.About {
+    margin-top: 0; /* Removes any top margin */
+    padding-top: 150px; /* Adds space at the top of the section */
+    padding-bottom: 30px; /* Adds space at the bottom of the section */
+}
+
+/* Stats section styling */
+.Stats {
+    margin-top: 0; /* Removes any top margin */
+    padding-top: 160px; /* Adds space at the top */
+    padding-bottom: 220px; /* Adds space at the bottom */
+}
+
+/* Style for numbers inside the Stats section */
+.number {
+    color: rgb(11, 87, 166); /* Sets the text color to blue */
+}
+
+/* Stations section styling */
+.Staions {
+    margin: 0; /* Removes top margin */
+    padding-top: 90px; /* Adds padding at the top */
+    padding-bottom: 50px; /* Adds padding at the bottom */
+}
+
+/* Styling for elements with the class 'st' */
+.st {
+    margin: 0; /* Removes top margin */
+}
+
+/* Information section styling */
+.Information {
+    margin-top: 0; /* Removes top margin */
+    padding-top: 50px; /* Adds padding at the top */
+    padding-bottom: 100px; /* Adds padding at the bottom */
+}
+
+/* Styling for the information boxes */
+.info {
+    background-color: rgba(166, 173, 178, 0.090); /* Light grayish background */
+    margin: 30px 5px 5px 5px; /* Adds margin around the box */
+    padding-top: 20px; /* Adds padding at the top */
+    padding-left: 40px; /* Adds padding on the left */
+    height: 120px; /* Sets a fixed height */
+}
+
+/* Header styling inside the Information section */
+.info-header {
+    color: rgb(6, 55, 159); /* Blue text color */
+}
+
+/* Content section styling */
+.Content {
+    margin-top: 0; /* Removes top margin */
+    padding-top: 80px; /* Adds padding at the top */
+    padding-bottom: 100px; /* Adds padding at the bottom */
+}
+
+/* Styling for elements with the class 'rihlat' */
+.rihlat {
+    padding-left: 15%; /* Adds padding to the left */
+
+}
+
+/* Box shadow styling for elements with the theme-shadow class */
+.theme-shadow {
+    box-shadow: var(--box-shadow); /* Applies a custom box shadow */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1100px) {
+    .rihlat {
+        max-width: 70%; /* Limits the width on small screens */
+        max-height: 70%; /* Limits the height on small screens */
+    }
+    .card {
+        margin-left: 10%; /* Centers the card horizontally */
+    }
+}
+
+/* ################################   Sections End   ################################ */
+
+/* ////////////////////////////////   Faded Line   //////////////////////////////// */
+
+.faded-line {
+    height: 2px; /* Sets the height of the line */
+    background: linear-gradient(to left, rgba(11, 87, 166, 1), transparent); /* Creates a gradient effect with blue fading to transparent */
+    margin: 20px 0; /* Adds space above and below the line */
+    height: 3px; /* Adjusted line height */
+}
+
+/* ################################   Faded Line End   ################################ */
+
+/* ////////////////////////////////   Card   //////////////////////////////// */
+
+/* Style for text inside cards */
+.card-text {
+    color: rgb(128, 123, 117); /* Sets the text color to a light brown shade */
+}
+
+/* Scales down the card slightly and keeps the top-left corner fixed */
+.card-scale {
+    transform: scale(0.9); /* Reduces the size to 90% of the original */
+    transform-origin: top left; /* Fixes the top-left corner of the card while scaling */
+}
+
+.card-img{
+    height: 100%;
+    width: 100%;
+}
+
+/* Container for the bottom line effect on the card */
+.card-bottom-line {
+    position: relative; /* Ensures the ::after pseudo-element can be positioned absolutely */
+    overflow: hidden; /* Hides overflow content */
+    margin-top: 1rem; /* Adds space above the line */
+}
+
+/* Creates a bottom line effect on the card */
+.card-bottom-line::after {
+    content: ""; /* Creates an empty element for the line */
+    position: absolute; /* Positions the line absolutely within the card-bottom-line container */
+    left: 0; /* Aligns the line to the left */
+    bottom: 0; /* Aligns the line to the bottom */
+    width: 50%; /* Sets the width of the line to half of the container */
+    height: 1px; /* Sets the height of the line */
+    background-color: #dee2e6; /* Sets the color of the line to a light gray */
+}
+
+/* Styles for buttons inside cards */
+.card-button {
+    position: relative; /* Positions the button relative to the container */
+    z-index: 1; /* Ensures the button appears above other elements like the bottom line */
+}
+
+/* Styling for card buttons */
+.card-btn {
+    padding: 10px 20px; /* Adds padding inside the button */
+    font-size: 16px; /* Sets the font size */
+    font-weight: bold; /* Makes the text bold */
+    color: var(--c-light); /* Sets the text color to white */
+    background-color: var(--c-brand); /* Sets the background color of the button */
+    text-align: center; /* Centers the text inside the button */
+    text-decoration: none; /* Removes underline from the button text */
+    border-radius: 5px; /* Rounds the corners of the button */
+    border: 1px solid var(--c-brand); /* Adds a border with the same color as the background */
+    transition: background-color 0.3s, border-color 0.3s; /* Adds a smooth transition effect for hover states */
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Focus state for card buttons */
+.card-btn:focus {
+    outline: none; /* Removes the default focus outline */
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5); /* Adds a custom shadow effect for focus */
+}
+
+/* Ensures links inside card buttons have no underline and white text */
+.card-btn a {
+    text-decoration: none; /* Removes underline from links */
+    color: var(--c-light); /* Sets the text color to white */
+}
+
+/* Custom button style */
+.btn-custom {
+    background-color: var(--c-brand); /* Primary color for the button */
+    border-color: var(--c-brand); /* Border color matching the background */
+    color: var(--c-light); /* Sets the text color to white */
+}
+
+/* Hover effect for custom buttons */
+.btn-custom:hover {
+    background-color: var(--c-brand); /* Keeps the same color on hover */
+    border-color: var(--c-brand); /* Keeps the same border color on hover */
+}
+
+/* ################################   Card End   ################################ */
+
+/* ////////////////////////////////   Footer   //////////////////////////////// */
+
+/* Footer styling */
+footer {
+    margin-top: auto; /* Pushes the footer to the bottom of the page if necessary */
+    background-color: var(--c-brand); /* Sets the background color of the footer */
+    padding-top: 40px; /* Adds padding at the top of the footer */
+    padding-bottom: 30px; /* Adds padding at the bottom of the footer */
+}
+
+/* Styling for text elements in the footer */
+footer li,
+footer p,
+footer a {
+    color: rgba(255, 255, 255, 0.7); /* Sets a light, semi-transparent white color for text */
+}
+
+/* Removes default list styling from footer lists */
+footer ul {
+    list-style: none; /* Removes bullet points from list items */
+    padding: 0; /* Removes default padding */
+}
+
+/* Footer logo styling */
+.footer-logo {
+    border-radius: 50%; /* Rounds the corners of the logo */
+    background-color: var(--c-light); /* Sets the background color of the logo to white */
+}
+
+/* Padding for the footer logo */
+.f_logo {
+    padding-top: 20px; /* Adds space above the logo */
+}
+
+/* Slogan styling in the footer */
+.slogan {
+    color: var(--c-light); /* Sets the text color to white */
+    padding-top: 30px; /* Adds space above the slogan */
+    font-family: 'SansOneBold', sans-serif; /* Uses the SansOneBold font for the slogan */
+    font-size: 19px; /* Sets the font size */
+}
+
+/* ################################   Footer End   ################################ */
